@@ -17,8 +17,7 @@ def runner():
 
 @pytest.fixture()
 def dataset(shared_datadir):
-    contents = (shared_datadir / "results_1.txt").read_text()
-    return contents
+    return (shared_datadir / "results_1.txt").read_text()
 
 
 def test_valid_input_content(runner, dataset):

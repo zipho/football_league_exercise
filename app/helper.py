@@ -2,14 +2,15 @@ import logging
 import sys
 from typing import Any
 
-
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 def sanity_check(line: str) -> bool:
     """This evaluates entry line for data sanity
-    Argument:
+    Args:
         line: a string containing match results
+    Return:
+        True or False
     """
     line_list = line.split(",")
     if len(line_list) != 2:
@@ -26,7 +27,15 @@ def sanity_check(line: str) -> bool:
 
 
 def transform_to_dict(match: str) -> dict:
-    """This transform the log entry to match dictionary"""
+    """Transforms a match string into a dictionary.
+
+    Args:
+        match: A string representing a match.
+
+    Returns:
+        A dictionary representing the match, with team names as keys and scores as values.
+    """
+
     line = [x.strip(" ") for x in match.split(",")]
     return dict(x.rsplit(" ", 1) for x in line)
 
@@ -34,7 +43,7 @@ def transform_to_dict(match: str) -> dict:
 def display_logtable(log: list[Any]):
     """This displays the log table
 
-    Arguments:
+    Args:
         log: a list of team and points
     """
     prev_score_ref = prev_index_ref = 0

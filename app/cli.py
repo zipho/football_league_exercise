@@ -1,5 +1,4 @@
 """Console script for app."""
-import sys
 import click
 from app.match import Match
 import logging
@@ -16,7 +15,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 def main(fixture_file):
     """Console script for app.
 
-    Arguments:
+    Args:
         fixture_file: File object passed as argument via command prompt
     """
     league_log = []
@@ -35,33 +34,30 @@ def main(fixture_file):
 def handle_match(line: str, league_log: list):
     """This handles the allocation of outcomes for each team
 
-    Arguments:
+    Args:
         line: a line entry on the match results log table
         league_log: a list of dictionaries that has point allocation for each match
     """
     result_dict = transform_to_dict(line)
     match = Match(result_dict)
     if match.outcome.name == "DRAW":
-        for team in list(result_dict.keys()):
-            league_log.append({team: 1})
+        league_log.extend({team: 1} for team in list(result_dict.keys()))
     else:
-        league_log.append({match.winner: 3})
-        league_log.append({match.looser: 0})
+        league_log.extend(({match.winner: 3}, {match.looser: 0}))
 
 
 def handle_sort(league_log: list) -> list[Any]:
     """This handles the calculation and sorting of overall results
 
-    Arguments:
+    Args:
         league_log: a list of the dictionaries containing the points allocation for matches
     """
     counter = collections.Counter()
     for entry in league_log:
-        counter.update(entry)
+        counter |= entry
     results = dict(counter)
     key_sort = sorted(results.items(), key=lambda x: x[0], reverse=False)
-    value_sort = sorted(key_sort, key=lambda x: x[1], reverse=True)
-    return value_sort
+    return sorted(key_sort, key=lambda x: x[1], reverse=True)
 
 
 if __name__ == "__main__":
