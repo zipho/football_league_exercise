@@ -1,12 +1,11 @@
 """Console script for app."""
-import dataclasses
 import sys
 import click
 from app.match import Match
 import logging
 import sys
 from app.helper import sanity_check, transform_to_dict, display_logtable
-import collections, functools, operator
+import collections
 from typing import Any
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
