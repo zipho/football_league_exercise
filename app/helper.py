@@ -16,7 +16,7 @@ def sanity_check(line: str) -> bool:
         return False
 
     for team in line_list:
-        score = team.split(' ').pop()
+        score = team.split(" ").pop()
         try:
             int(score)
         except ValueError:
@@ -27,7 +27,7 @@ def sanity_check(line: str) -> bool:
 
 def transform_to_dict(match: str) -> dict:
     """This transform the log entry to match dictionary"""
-    line = [x.strip(' ') for x in match.split(",")]
+    line = [x.strip(" ") for x in match.split(",")]
     return dict(x.rsplit(" ", 1) for x in line)
 
 
@@ -42,5 +42,3 @@ def display_logtable(log: list[Any]):
         ix = prev_index_ref if entry[1] == prev_score_ref else prev_index_ref + 1
         print(f"{ix}.  {entry[0]}, {entry[1]} pts")
         prev_score_ref, prev_index_ref = entry[1], ix
-
-

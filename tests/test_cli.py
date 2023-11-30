@@ -22,10 +22,12 @@ def dataset(shared_datadir):
 
 
 def test_valid_input_content(runner, dataset):
-    expected = ('1.  Tarantulas, 6 pts\n2.  Lions, 4 pts\n3.  FC Awesome, 3 pts\n4.  Snakes, 1 pts\n5.  Great, '
-                '0 pts\n5.  Grouches, 0 pts\n')
+    expected = (
+        "1.  Tarantulas, 6 pts\n2.  Lions, 4 pts\n3.  FC Awesome, 3 pts\n4.  Snakes, 1 pts\n5.  Great, "
+        "0 pts\n5.  Grouches, 0 pts\n"
+    )
     with runner.isolated_filesystem():
-        with open('in.txt', 'w') as f:
+        with open("in.txt", "w") as f:
             f.write(dataset)
         result = runner.invoke(cli.main, ["in.txt"])
     assert result.output == expected, "log table failed to be generated"
@@ -34,7 +36,7 @@ def test_valid_input_content(runner, dataset):
 
 def test_invalid_input_content(runner):
     with runner.isolated_filesystem():
-        with open('in.txt', 'w') as f:
+        with open("in.txt", "w") as f:
             f.write("Invalid data:, 2.0")
         result = runner.invoke(cli.main, ["in.txt"])
     assert result.output == "", "log table should be without entries"
@@ -44,9 +46,11 @@ def test_invalid_input_content(runner):
 def test_basic_commands(runner):
     """Test the CLI."""
     result = runner.invoke(cli.main)
-    assert result.exit_code == 2, "should exit with error, as the fixture_file argument is needed"
+    assert (
+        result.exit_code == 2
+    ), "should exit with error, as the fixture_file argument is needed"
     assert "Error: Missing argument 'FIXTURE_FILE'" in result.output
 
-    help_result = runner.invoke(cli.main, ['--help'])
+    help_result = runner.invoke(cli.main, ["--help"])
     assert help_result.exit_code == 0, "should print help and exit."
-    assert '--help  Show this message and exit.' in help_result.output
+    assert "--help  Show this message and exit." in help_result.output

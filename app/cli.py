@@ -8,10 +8,12 @@ import sys
 from app.helper import sanity_check, transform_to_dict, display_logtable
 import collections, functools, operator
 from typing import Any
+
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
+
 @click.command()
-@click.argument('fixture_file', type=click.File('r'))
+@click.argument("fixture_file", type=click.File("r"))
 def main(fixture_file):
     """Console script for app.
 
@@ -25,7 +27,7 @@ def main(fixture_file):
                 handle_match(line.strip(), league_log)
             except Exception as e:
                 logging.error(f"Error while processing the match input: {e}")
-                e.add_note('Error while processing the match')
+                e.add_note("Error while processing the match")
                 raise
     value_sort = handle_sort(league_log) if league_log else []
     display_logtable(value_sort)
