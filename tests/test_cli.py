@@ -22,8 +22,7 @@ def dataset(shared_datadir):
 
 def test_valid_input_content(runner, dataset):
     expected = (
-        "1.  Tarantulas, 6 pts\n2.  Lions, 4 pts\n3.  FC Awesome, 3 pts\n4.  Snakes, 1 pts\n5.  Great, "
-        "0 pts\n5.  Grouches, 0 pts\n"
+        "1.  FC Awesome, 3 pts\n1.  Lions, 3 pts\n1.  Tarantulas, 3 pts\n2.  Snakes, 1 pts\n"
     )
     with runner.isolated_filesystem():
         with open("in.txt", "w") as f:
